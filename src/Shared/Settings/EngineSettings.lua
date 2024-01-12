@@ -6,6 +6,8 @@
 	
 	SETTINGS
 	========
+	EnableOutput (Bool) : Determines whether or not any output will be logged to the console.
+
 	ShowLogoInOutput (Bool) : Determines whether or not the dragon engine logo is displayed apon startup.
 	
 	Debug (Bool) : Determines whether or not any debug output displayed via DragonEngine:DebugLog() will be displayed.
@@ -16,6 +18,7 @@
 --]]
 
 return{
+	EnableOutput = true,
 	ShowLogoInOutput = false,
 	Debug = false
 }

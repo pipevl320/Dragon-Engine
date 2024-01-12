@@ -18,7 +18,8 @@
 
 --- @interface FrameworkSettings
 --- @within DragonEngine
---- @field ShowLogoInOutput bool -- Determines whether or not the dragon engine logo is shown in the output when the framework runs.
+--- @field EnableOutput bool -- Determines whether or not any output will be logged to the console.
+--- @field ShowLogoInOutput bool -- Determines whether or not the Dragon Engine logo is shown in the output when the framework runs.
 --- @field Debug bool -- Determines whether or not any debug logs logged via DragonEngine:DebugLog() will be displayed.
 --- @field ServerPaths ServerPaths
 --- @field ClientPaths ClientPaths
@@ -89,7 +90,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
---- Adds the given text to the framework's logs.
+--- Adds the given text to the framework's logs if FrameworkSettings.EnableOutput is `true`.
 --- ```lua
 --- DragonEngine:Log("EquipPet() was called, but the player has no avatar!","Warning")
 --- ```
@@ -99,27 +100,29 @@ end
 --- @return nil
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function DragonEngine:Log(LogMessage,LogMessageType)
-	LogMessageType = LogMessageType or "Normal"
+	if DragonEngine.Config.EnableOutput then
+		LogMessageType = LogMessageType or "Normal"
 
-	if LogMessage == nil then
-		print("")
-		return
-	end
+		if LogMessage == nil then
+			print("")
+			return
+		end
 
-	table.insert(LogHistory,{Message = LogMessage,Type = LogMessageType,Timestamp = tostring(DateTime.now().UnixTimestampMillis)})
-	MessageLogged:Fire(LogMessage,LogMessageType,tostring(DateTime.now().UnixTimestampMillis))
+		table.insert(LogHistory,{Message = LogMessage,Type = LogMessageType,Timestamp = tostring(DateTime.now().UnixTimestampMillis)})
+		MessageLogged:Fire(LogMessage,LogMessageType,tostring(DateTime.now().UnixTimestampMillis))
 
-	if LogMessageType == "warning" or LogMessageType == "Warning" then
-		warn("[Dragon Engine Server] "..LogMessage)
-	elseif LogMessageType == "error" or LogMessageType == "Error" then
-		error("[Dragon Engine Server] "..LogMessage)
-	else
-		print("[Dragon Engine Server] "..LogMessage)
+		if LogMessageType == "warning" or LogMessageType == "Warning" then
+			warn("[Dragon Engine Server] "..LogMessage)
+		elseif LogMessageType == "error" or LogMessageType == "Error" then
+			error("[Dragon Engine Server] "..LogMessage)
+		else
+			print("[Dragon Engine Server] "..LogMessage)
+		end
 	end
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
---- Adds the given text to the framework's logs if FrameworkSettings.Debug is `true`.
+--- Adds the given text to the framework's logs if FrameworkSettings.EnableOutput and FrameworkSettings.Debug are `true`.
 --- ```lua
 --- DragonEngine:DebugLog(
 --- 	("The item '%s' was purchased by player '%s'"):format(ItemName,Player.Name),
@@ -132,7 +135,7 @@ end
 --- @return nil
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function DragonEngine:DebugLog(LogMessage,LogMessageType)
-	if DragonEngine.Config.Debug then
+	if DragonEngine.Config.EnableOutput and DragonEngine.Config.Debug then
 		LogMessageType = LogMessageType or "Normal"
 
 		if LogMessage == nil then

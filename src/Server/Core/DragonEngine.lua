@@ -76,8 +76,9 @@ local Service_ClientEndpoints = Instance.new('Folder')
 	  Service_ClientEndpoints.Name = "Service_ClientEndpoints"
 	  Service_ClientEndpoints.Parent = Framework_NetworkFolder
 local CurrentFrameworkSettings = {
+	EnableOutput = DefaultFrameworkSettings.CoreSettings.EnableOutput,
 	ShowLogoInOutput = DefaultFrameworkSettings.CoreSettings.ShowLogoInOutput,
-	Debug = DefaultFrameworkSettings.CoreSettings.ShowLogoInOutput,
+	Debug = DefaultFrameworkSettings.CoreSettings.Debug,
 	ServerPaths = DefaultFrameworkSettings.ServerPaths
 }
 DragonEngineServer.Services = {} --Contains all services, both running and stopped
@@ -585,6 +586,7 @@ function DragonEngineServer:Run(FrameworkSettings)
 			table.insert(CurrentFrameworkSettings.ServerPaths.ServicePaths,ServicePath)
 		end
 
+		CurrentFrameworkSettings.EnableOutput = FrameworkSettings.EnableOutput
 		CurrentFrameworkSettings.ShowLogoInOutput = FrameworkSettings.ShowLogoInOutput
 		CurrentFrameworkSettings.Debug = FrameworkSettings.Debug
 	end

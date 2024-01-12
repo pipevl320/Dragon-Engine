@@ -51,6 +51,7 @@ local DefaultFrameworkSettings = {
 -- DEFINES --
 -------------
 local CurrentFrameworkSettings = {
+	EnableOutput = DefaultFrameworkSettings.CoreSettings.EnableOutput,
 	ShowLogoInOutput = DefaultFrameworkSettings.CoreSettings.ShowLogoInOutput,
 	Debug = DefaultFrameworkSettings.CoreSettings.ShowLogoInOutput,
 	ClientPaths = DefaultFrameworkSettings.ClientPaths
@@ -540,6 +541,7 @@ function DragonEngineClient:Run(FrameworkSettings)
 			table.insert(CurrentFrameworkSettings.ClientPaths.ControllerPaths,ControllerPath)
 		end
 
+		CurrentFrameworkSettings.EnableOutput = FrameworkSettings.EnableOutput
 		CurrentFrameworkSettings.ShowLogoInOutput = FrameworkSettings.ShowLogoInOutput
 		CurrentFrameworkSettings.Debug = FrameworkSettings.Debug
 	end

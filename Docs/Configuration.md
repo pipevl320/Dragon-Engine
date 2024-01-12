@@ -4,7 +4,8 @@ The framework can be configured by passing a configuration table to the `DragonE
 
 | Field Name       | Field Type | Field Description                                                                                                                                |
 |------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| ShowLogoInOutput | Bool       | Determines whether or not the dragon engine logo is shown in the output when the framework runs.                                                 |
+| EnableOutput     | Bool       | Determines whether or not any output will be logged to the console.
+| ShowLogoInOutput | Bool       | Determines whether or not the Dragon Engine logo is shown in the output when the framework runs.                                                 |
 | Debug            | Bool       | Determines whether or not any debug logs logged via `DragonEngine:DebugLog()` will be displayed.                                                   |
 | ServerPaths      | Dictionary | Contains references to folders that the framework will look in when loading modules & services. For more information, see **"server paths"**.    |
 | ClientPaths      | Dictionary | Contains references to folders that the framework will look in when loading modules & controllers. For more information, see **"client paths"**. |
